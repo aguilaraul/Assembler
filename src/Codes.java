@@ -1,3 +1,7 @@
+/**
+ * @author Raul Aguilar
+ * @date    October 14, 2019
+ */
 import java.util.HashMap;
 
 public class Codes {
@@ -106,12 +110,21 @@ public class Codes {
         return jumpCodes.get(mnemonic);
     }
 
+    /**
+     * Converts a decimal number to binary
+     * @param n decimal number
+     * @return  binary representation of decimal number
+     */
     public static String decimalToBinary(int n) {
         String binary = "";
         do {
           binary = (n%2) + binary;
           n /= 2;
         } while(n%2 > 0);
+
+        while(binary.length() < 16) {
+            binary = "0" + binary;
+        }
     
         return binary;
       }
