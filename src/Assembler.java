@@ -93,12 +93,12 @@ public class Assembler {
             if(p.getCommandType() == Command.A_COMMAND) {
                 try {
                     int decimal = Integer.parseInt(p.getSymbol());
-                    String dec = Codes.decimalToBinary(decimal) + '\n';
+                    String dec = Code.decimalToBinary(decimal) + '\n';
                     outputFile.write(dec);
                     romAddress++;
                 } catch(NumberFormatException e) {
                     if(symbolTable.contains(p.getSymbol())) {
-                        String dec = Codes.decimalToBinary(symbolTable.getAddress(p.getSymbol())) + '\n';
+                        String dec = Code.decimalToBinary(symbolTable.getAddress(p.getSymbol())) + '\n';
                         outputFile.write(dec);
                     } else {
                         symbolTable.addEntry(p.getSymbol(), ramAddress, p.getLineNumber());

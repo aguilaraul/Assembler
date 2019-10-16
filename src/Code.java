@@ -4,7 +4,7 @@
  */
 import java.util.HashMap;
 
-public class Codes {
+public class Code {
     private HashMap<String, String> compCodes = new HashMap<String, String>();
     private HashMap<String, String> destCodes = new HashMap<String, String>();
     private HashMap<String, String> jumpCodes = new HashMap<String, String>();
@@ -86,7 +86,7 @@ public class Codes {
     /**
      * Returns binary code for given comp mnemonic
      * @param mnemonic the key given
-     * @return the converted bits for comp key
+     * @return 7 bits for comp key
      */
     public String getComp(String mnemonic) {
         return compCodes.get(mnemonic);
@@ -95,7 +95,7 @@ public class Codes {
     /**
      * Returns binary code for dest mnemonic
      * @param mnemonic the key given
-     * @return the converted bits for dest key
+     * @return 3 bits for dest key
      */
     public String getDest(String mnemonic) {
         return destCodes.get(mnemonic);
@@ -104,7 +104,7 @@ public class Codes {
     /**
      * Returns binary code for jump mnemonic
      * @param mnemonic the key given
-     * @return the converted bits for jump key
+     * @return 3 bits for jump key
      */
     public String getJump(String mnemonic) {
         return jumpCodes.get(mnemonic);
@@ -120,7 +120,7 @@ public class Codes {
         do {
           binary = (n%2) + binary;
           n /= 2;
-        } while(n%2 > 0);
+        } while(n > 0);
 
         while(binary.length() < 16) {
             binary = "0" + binary;

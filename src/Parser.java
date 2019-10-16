@@ -10,7 +10,7 @@
 
     private Scanner inputFile;
     private int lineNumber;
-    private String rawline;
+    private String rawLine;
 
     private String cleanLine;
     private Command commandType;
@@ -19,7 +19,7 @@
     private String compMnemonic;
     private String jumpMnemonic;
 
-    private Codes c = new Codes();
+    private Code c = new Code();
     Command command;
 
     /**
@@ -50,7 +50,10 @@
     }
 
     /**
-     * Reads next line from file and parses it into instance variables
+     * Reads the next command from the input and makes it the
+     * current command.
+     * Should only be called if hasMoreCommands() is true.
+     * Initially there is no current command.
      */
     public void advance() {
         lineNumber++;
@@ -149,12 +152,16 @@
     private void parseComp() {
         c.Code();
         int equals = cleanLine.indexOf('=');
-        if(equals != -1) {
-            compMnemonic = cleanLine.substring(0, equals);
-            compMnemonic = c.getDest(compMnemonic);
-        } else {
-            compMnemonic = null;
-            compMnemonic = c.getDest(compMnemonic);
+        int semicolon = cleanLine.indexOf(';');
+        if(semicolon == -1 && equals > 0) {
+            compMnemonic = cleanLine.substring(equals+1);
+            compMnemonic = c.getComp(compMnemonic);
+        } else if(semicolon > 0 && equals > 0) {
+            compMnemonic = cleanLine.substring(equals+1, semicolon);
+            compMnemonic = c.getComp(compMnemonic);
+        } else if(semicolon > 0 && equals == -1) {
+            compMnemonic = cleanLine.substring(0, semicolon);
+            compMnemonic = c.getComp(compMnemonic);
         }
     }
 

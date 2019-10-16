@@ -6,7 +6,6 @@
 import java.util.HashMap;
 
 public class SymbolTable {
-    private static String INITIAL_VALID_CHARS;
     private static String ALL_VALID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_.$:";
     
     private HashMap<String, Integer> symbolTable = new HashMap<>();
