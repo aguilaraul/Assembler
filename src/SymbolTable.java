@@ -15,7 +15,7 @@ public class SymbolTable {
      */
     public void SymbolTable() {
         for(int i = 0; i < 16; i++) {
-            symbolTable.put("R"+1, i);
+            symbolTable.put("R"+i, i);
         }
         symbolTable.put("SP", 0);
         symbolTable.put("LCL", 1);

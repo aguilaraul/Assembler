@@ -60,6 +60,15 @@ public class Assembler {
     }
 
 
+    /**
+     * The first pass through the file finds and stores user-defined variables and labels in the symbol
+     * table without writing anything to the output file
+     * @param inputFileName the file being read
+     * @param symbolTable   the symbol table to store variable and lables (initialzies with predefined symbols)
+     * @param romAddress    the current PC rom address of the instruction
+     * @param ramAddress    the current ram address to store the variable in
+     * @return  symbol table filled-in with variables and labels found in file
+     */
     private static SymbolTable firstPass(String inputFileName, SymbolTable symbolTable, int romAddress, int ramAddress) {
         Parser p = new Parser();
         symbolTable.SymbolTable();
@@ -70,7 +79,15 @@ public class Assembler {
                 symbolTable.addEntry(p.getSymbol(), romAddress, p.getLineNumber());
             }
             if(p.getCommandType() == Command.A_COMMAND) {
-                symbolTable.addEntry(p.getSymbol(), romAddress, p.getLineNumber());
+                try {
+                    int decimal = Integer.parseInt(p.getSymbol());
+                } catch(NumberFormatException notADecimal) {
+                    if(!symbolTable.contains(p.getSymbol()) && Character.isLowerCase(p.getSymbol().charAt(0)) ) {
+                        symbolTable.addEntry(p.getSymbol(), ramAddress, p.getLineNumber());
+                        ramAddress++;
+                    }
+                }
+                
                 romAddress++;
             }
             if(p.getCommandType() == Command.C_COMMAND) {
@@ -81,6 +98,15 @@ public class Assembler {
         return symbolTable;
     }
 
+    /**
+     * Second pass through the file converts each line to binary code, while using the filled-in symbol
+     * table from the first pass to convert symbols and labls
+     * @param inputFileName the file being read
+     * @param symbolTable   the predefined symbol table
+     * @param outputFile    the name of the output HACK file
+     * @param romAddress    the current PC rom address of the instruction
+     * @param ramAddress    the current ram address for user-defined variables
+     */
     private static void secondPass(String inputFileName, SymbolTable symbolTable, PrintWriter outputFile, int romAddress, int ramAddress) {
         Parser p = new Parser();
         p.Parser(inputFileName);
@@ -97,7 +123,7 @@ public class Assembler {
                     String dec = Code.decimalToBinary(decimal) + '\n';
                     outputFile.write(dec);
                     romAddress++;
-                } catch(NumberFormatException e) {
+                } catch(NumberFormatException notADecimal) {
                     if(symbolTable.contains(p.getSymbol())) {
                         String dec = Code.decimalToBinary(symbolTable.getAddress(p.getSymbol())) + '\n';
                         outputFile.write(dec);
