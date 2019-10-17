@@ -1,6 +1,6 @@
 /**
  * @author  Raul Aguilar
- * @date    October 14, 2019
+ * @date    October 16, 2019
  */
 
  import java.io.*;
@@ -64,7 +64,7 @@
     }
 
     /**
-     * Reads raw line from file and strips line of whitespace
+     * Reads raw line from file and strips it of whitespace
      * and comments
      */
     private void cleanLine() {
@@ -104,7 +104,7 @@
     }
 
     /**
-     * Helper method parses line depending on instuction type
+     * Helper method: parses line depending on instuction type
      * Appropriate parts of instruction filled
      */
     private void parse() {
@@ -132,7 +132,7 @@
     }
 
     /**
-     * Helper method parses line to get dest part
+     * Helper method: parses line to get dest part
      */
     private void parseDest() {
         c.Code();
@@ -147,7 +147,7 @@
     }
 
     /**
-     * Helper method parses line to get comp part
+     * Helper method: parses line to get comp part
      */
     private void parseComp() {
         c.Code();
@@ -166,7 +166,7 @@
     }
 
     /**
-     * Helper method parses line to get jump part
+     * Helper method: parses line to get jump part
      */
     private void parseJump() {
         c.Code();
@@ -181,7 +181,7 @@
     }
 
     /**
-     * Getter for command type
+     * Getter for the command type of the current line
      * @return Command enum for command type
      */
     public Command getCommandType() {
@@ -189,7 +189,7 @@
     }
 
     /**
-     * Getter for symbol
+     * Getter for the symbol parsed from the line
      * @return String for symbol
      */
     public String getSymbol() {
@@ -198,28 +198,50 @@
 
     /**
      * Getter for dest part of C-instuctruction
-     * @return 
+     * May be empty
+     * @return the dest mnemonic
      */
     public String getDest() {
         return destMnemonic;
     }
 
+    /**
+     * Getter for the comp part of the C-instuction
+     * @return the comp mnemonic
+     */
     public String getComp() {
         return compMnemonic;
     }
 
+    /**
+     * Getter for the jump part of the C-instuction
+     * May be empty
+     * @return the jump mnemonic
+     */
     public String getJump() {
         return jumpMnemonic;
     }
 
+    /**
+     * Get the current line from the file
+     * @return line from the file
+     */
     public String getRawLine() {
         return rawLine;
     }
 
+    /**
+     * Get the clean version of the raw line
+     * @return cleaned up line
+     */
     public String getCleanLine() {
         return cleanLine;
     }
 
+    /**
+     * Get the line number of the symbol encountered
+     * @return current line number
+     */
     public int getLineNumber() {
         return lineNumber;
     }

@@ -1,6 +1,6 @@
 /**
  * @author Raul Aguilar
- * @date    October 14, 2019
+ * @date    October 16, 2019
  */
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
@@ -70,6 +70,7 @@ public class Assembler {
                 symbolTable.addEntry(p.getSymbol(), romAddress, p.getLineNumber());
             }
             if(p.getCommandType() == Command.A_COMMAND) {
+                symbolTable.addEntry(p.getSymbol(), romAddress, p.getLineNumber());
                 romAddress++;
             }
             if(p.getCommandType() == Command.C_COMMAND) {
