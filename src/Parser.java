@@ -1,6 +1,9 @@
 /**
  * @author  Raul Aguilar
- * @date    October 16, 2019
+ * @date    03 November 2019
+ * Parser: Encapsulates access to the input code. Reads an assembly language command, parses it, and provides
+ * convenient access to the command's components (fields and symbols). In addition, removes all white space
+ * and comments.
  */
 
  import java.io.*;
@@ -20,12 +23,11 @@
     private String jumpMnemonic;
 
     private Code c = new Code();
-    Command command;
 
     /**
      * Opens input file and prepares to parse
      * If file cannot be found ends program with error message
-     * @param inFileName
+     * @param inFileName Name of the file to parse
      */
     public void Parser(String inFileName) {
         try {
@@ -38,7 +40,7 @@
 
     /**
      * Returns boolean if more commands left, closes stream if not
-     * @return True if more commands, else closes stream
+     * @return True if more commands, else closes stream and returns false
      */
     public boolean hasMoreCommands() {
         if(inputFile.hasNextLine()) {
@@ -50,8 +52,7 @@
     }
 
     /**
-     * Reads the next command from the input and makes it the
-     * current command.
+     * Reads the next command from the input and makes it the current command.
      * Should only be called if hasMoreCommands() is true.
      * Initially there is no current command.
      */
@@ -64,8 +65,7 @@
     }
 
     /**
-     * Reads raw line from file and strips it of whitespace
-     * and comments
+     * Reads a line from the file and strips it of whitespace and comments
      */
     private void cleanLine() {
         int commentIndex;
@@ -86,11 +86,11 @@
     }
 
     /**
-     * Guesses which command type it is from clean line
+     * Guesses which command type the clean line is
      */
     private void parseCommandType() {
         if(cleanLine == null || cleanLine.length() == 0) {
-            commandType = command.NO_COMMAND;
+            commandType = Command.NO_COMMAND;
         } else {
             char first = cleanLine.charAt(0);
             if(first == '(') {
@@ -104,8 +104,7 @@
     }
 
     /**
-     * Helper method: parses line depending on instuction type
-     * Appropriate parts of instruction filled
+     * Parses the line depending on the assigned command type and the appropriate parts of the instruction are filled
      */
     private void parse() {
         if(commandType == Command.L_COMMAND || commandType == Command.A_COMMAND) {
@@ -132,7 +131,8 @@
     }
 
     /**
-     * Helper method: parses line to get dest part
+     * Parses C-commands for the dest mnemonic. The dest mnemonic is used to look-up the appropriate binary code
+     * from the Code table
      */
     private void parseDest() {
         c.Code();
@@ -147,7 +147,8 @@
     }
 
     /**
-     * Helper method: parses line to get comp part
+     * Parses C-commands for the comp mnemonic. The comp mnemonic is used to look-up the appropriate binary code
+     * from the Code table
      */
     private void parseComp() {
         c.Code();
@@ -166,7 +167,8 @@
     }
 
     /**
-     * Helper method: parses line to get jump part
+     * Parses C-commands for the jump mnemonic. The jump mnemonic is used to look-up the appropriate binary code
+     * from the Code table
      */
     private void parseJump() {
         c.Code();
@@ -181,7 +183,7 @@
     }
 
     /**
-     * Getter for the command type of the current line
+     * Gets the command type of the current line
      * @return Command enum for command type
      */
     public Command getCommandType() {
@@ -189,7 +191,7 @@
     }
 
     /**
-     * Getter for the symbol parsed from the line
+     * Gets the symbol parsed from the current line
      * @return String for symbol
      */
     public String getSymbol() {
@@ -197,8 +199,8 @@
     }
 
     /**
-     * Getter for dest part of C-instuctruction
-     * May be empty
+     * Gets the dest part of C-instruction
+     * May be empty or already initialized
      * @return the dest mnemonic
      */
     public String getDest() {
@@ -206,7 +208,7 @@
     }
 
     /**
-     * Getter for the comp part of the C-instuction
+     * Gets the comp part of the C-instruction
      * @return the comp mnemonic
      */
     public String getComp() {
@@ -214,8 +216,8 @@
     }
 
     /**
-     * Getter for the jump part of the C-instuction
-     * May be empty
+     * Gets the jump part of the C-instruction
+     * May be empty or already initialized
      * @return the jump mnemonic
      */
     public String getJump() {

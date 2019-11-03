@@ -1,6 +1,7 @@
 /**
- * @author Raul Aguilar
- * @date    October 14, 2019
+ * @author  Raul Aguilar
+ * @date    03 November 2019
+ * Code: Translates Hack assembly language mnemonics into binary codes
  */
 import java.util.HashMap;
 
